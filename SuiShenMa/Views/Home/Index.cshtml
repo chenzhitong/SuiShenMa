@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>随申码</title>
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="bg1">
+        <div class="qr"></div>
+        <input type="text" value="点击输入姓名" />
+        <span id="update">更新于：<span id="time"></span></span>
+        <img src="~/images/2.png" />
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery.qrcode/jquery.qrcode.min.js"></script>
+    <script>
+        var date = new Date();
+        var dateTime = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        $("#time").text(dateTime);
+        updateQrCode();
+        $("input").change(function () { updateQrCode(); });
+        $("input").mousedown(function () { $("input").val("")});
+        function updateQrCode() {
+        $('.qr').html("");
+            var r = "";
+            for (var i = 0; i < 10; i++) {
+                r += Math.random();
+            }
+            $('.qr').qrcode({
+                text: "https://suishenma.azurewebsites.net/home/check?name=" + encodeURI($("input").val()) + "&r=" + r,
+                foreground: "#0ABE65"
+            })}
+    </script>
+</body>
+</html>
